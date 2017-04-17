@@ -1,0 +1,24 @@
+create table t_evenement (
+id NUMBER(10),
+date_ev DATE,
+type_ev varchar2(50),
+user varchar2(120),
+data VARCHAR2(50)
+)
+PARTITION BY RANGE (date_ev)
+SUBPARTITION BY LIST (type_ev)
+PARTITION siecle_der VALUES LESS THAN (TO_DATE('01/01/2000','DD/MM/YYYY')
+(SUBPARTITION siecle_der_aj VALUES ('AJOUT') tablespace tbs_sa,
+SUBPARTITION siecle_der_modif VALUES ('MODIFICATION') tablespace tbs_sm,
+SUBPARTITION siecle_der_supp VALUES ('SUPPRESSION') tablespace tbs_ss
+),
+PARTITION annee_der VALUES LESS THAN (TO_DATE('01/01/2008','DD/MM/YYYY')
+(SUBPARTITION annee_der_aj VALUES ('AJOUT') tablespace tbs_aa,
+SUBPARTITION annee_der_modif VALUES ('MODIFICATION') tablespace tbs_am,
+SUBPARTITION annee_der_supp VALUES ('SUPPRESSION') tablespace tbs_as
+),
+PARTITION en_cours VALUES LESS THAN (MAXVALUE)
+(SUBPARTITION en_cours_aj VALUES ('AJOUT') tablespace tbs_ea,
+SUBPARTITION en_cours_modif VALUES ('MODIFICATION') tablespace tbs_em,
+SUBPARTITION en_cours_supp VALUES ('SUPPRESSION') tablespace tbs_es
+)
